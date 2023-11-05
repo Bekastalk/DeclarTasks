@@ -6,7 +6,6 @@ import myProject.dto.SimpleResponse;
 import myProject.entities.ContractorCompany;
 import myProject.exception.AlreadyExistException;
 import myProject.exception.NotFoundException;
-import myProject.mapping.ContractorCompanyMapper;
 import myProject.repository.ContractorCompanyRepository;
 import myProject.service.ContractorCompanyService;
 import org.springframework.http.HttpStatus;
@@ -70,7 +69,14 @@ public class ContractorCompanyServiceImpl implements ContractorCompanyService {
 
     @Override
     public SimpleResponse delete(Long id) {
-        return null;
+        ContractorCompany contractorCompany = contractorCompanyRepository
+                .findById(id).orElseThrow(() -> new NotFoundException
+                        (String.format("Contractor company with id: %s not found!!! ", id)));
+        contractorCompanyRepository.delete(contractorCompany);
+        return new SimpleResponse(
+                HttpStatus.OK,
+                String.format("Contractor company with id:%s successfully deleted!!!", id)
+        );
     }
 
 }
