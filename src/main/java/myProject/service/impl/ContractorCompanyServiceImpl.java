@@ -1,5 +1,6 @@
 package myProject.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import myProject.dto.ContractorCompanyDto;
 import myProject.dto.SimpleResponse;
@@ -9,13 +10,14 @@ import myProject.exception.NotFoundException;
 import myProject.repository.ContractorCompanyRepository;
 import myProject.service.ContractorCompanyService;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
+@Transactional
 @RequiredArgsConstructor
 public class ContractorCompanyServiceImpl implements ContractorCompanyService {
-
 
     private final ContractorCompanyRepository contractorCompanyRepository;
 
@@ -78,5 +80,4 @@ public class ContractorCompanyServiceImpl implements ContractorCompanyService {
                 String.format("Contractor company with id:%s successfully deleted!!!", id)
         );
     }
-
 }
