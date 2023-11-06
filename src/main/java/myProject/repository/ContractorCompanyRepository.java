@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface ContractorCompanyRepository extends JpaRepository<ContractorCompany, Long> {
     Optional<ContractorCompanyDto> findContractorCompanyByName(String name);
-    Optional<ContractorCompany> findByName(String name);
+    ContractorCompany findByName(String name);
 
 
     @Query("""

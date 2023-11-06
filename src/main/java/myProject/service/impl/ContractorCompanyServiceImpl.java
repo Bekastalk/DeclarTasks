@@ -13,18 +13,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class ContractorCompanyServiceImpl implements ContractorCompanyService {
 
     private final ContractorCompanyRepository contractorCompanyRepository;
-
-
     @Override
     public SimpleResponse saveContractorCompany(ContractorCompanyDto contractorCompanyDto) {
-        Optional<ContractorCompany> byName = contractorCompanyRepository.findByName(contractorCompanyDto.getName());
+        ContractorCompany byName = contractorCompanyRepository.findByName(contractorCompanyDto.getName());
         if(byName==null) {
             ContractorCompany contractorCompany = new ContractorCompany();
             contractorCompany.setName(contractorCompanyDto.getName());

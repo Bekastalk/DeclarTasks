@@ -12,4 +12,3 @@ public interface CustomerCompanyMapper {
     CustomerCompanyDto toDto(CustomerCompany destination);
     List<CustomerCompanyDto> toDtoList(List<CustomerCompany> list);
 }
-

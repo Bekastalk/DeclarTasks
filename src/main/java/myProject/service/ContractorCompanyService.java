@@ -2,10 +2,8 @@ package myProject.service;
 
 import myProject.dto.ContractorCompanyDto;
 import myProject.dto.SimpleResponse;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 
 public interface ContractorCompanyService {
     SimpleResponse saveContractorCompany(ContractorCompanyDto contractorCompanyDto);
