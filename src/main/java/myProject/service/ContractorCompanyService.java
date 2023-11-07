@@ -14,4 +14,6 @@ public interface ContractorCompanyService {
     SimpleResponse update(Long id, ContractorCompanyDto contractorCompanyDto);
     SimpleResponse delete(Long id);
 
+    SimpleResponse assignToProject(Long contractorId, Long projectId);
+
 }
