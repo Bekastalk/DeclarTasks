@@ -22,4 +22,6 @@ public class ContractorCompany {
     private Long id;
 
     private String name;
+    @OneToOne(mappedBy = "contractorCompany", cascade = {CascadeType.ALL})
+    private Project project;
 }

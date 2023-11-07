@@ -34,6 +34,12 @@ public class ContractorCompanyApi {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/name")
+    public ContractorCompanyDto getByName(@RequestBody  String name){
+        return contractorCompanyService.getContractorCompanyDtoByName(name);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/{id}")
     public SimpleResponse update(@PathVariable Long id,
                                  @RequestBody ContractorCompanyDto contractorCompanyDto){
@@ -45,5 +51,7 @@ public class ContractorCompanyApi {
     public SimpleResponse delete(@PathVariable Long id){
         return contractorCompanyService.delete(id);
     }
+
+
 
 }

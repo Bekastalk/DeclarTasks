@@ -6,9 +6,11 @@ import lombok.extern.slf4j.Slf4j;
 import myProject.dto.ContractorCompanyDto;
 import myProject.dto.SimpleResponse;
 import myProject.entities.ContractorCompany;
+import myProject.entities.Project;
 import myProject.exception.AlreadyExistException;
 import myProject.exception.NotFoundException;
 import myProject.repository.ContractorCompanyRepository;
+import myProject.repository.ProjectRepository;
 import myProject.service.ContractorCompanyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import java.util.List;
 public class ContractorCompanyServiceImpl implements ContractorCompanyService {
 
     private final ContractorCompanyRepository contractorCompanyRepository;
+    private final ProjectRepository projectRepository;
     @Override
     public SimpleResponse saveContractorCompany(ContractorCompanyDto contractorCompanyDto) {
         ContractorCompany byName = contractorCompanyRepository.findByName(contractorCompanyDto.getName());
@@ -81,5 +84,20 @@ public class ContractorCompanyServiceImpl implements ContractorCompanyService {
                 HttpStatus.OK,
                 String.format("Contractor company with id:%s successfully deleted!!!", id)
         );
+    }
+
+    @Override
+    public SimpleResponse assignToProject(Long contractorId, Long projectId) {
+        Project project = projectRepository.findById(projectId).orElseThrow(
+                () -> new NotFoundException(String.format("Project with id: %s not found!!!", projectId)));
+        ContractorCompany contractorCompany = contractorCompanyRepository.findById(contractorId).orElseThrow(() -> new NotFoundException
+                (String.format("Contractor company with id: %s not found", contractorId)));
+        project.setContractorCompany(contractorCompany);
+        contractorCompany.setProject(project);
+        projectRepository.save(project);
+        contractorCompanyRepository.save(contractorCompany);
+        return new SimpleResponse(
+                HttpStatus.OK,
+                String.format("Contractor Company with id: %s successfully assigned!!!", contractorId));
     }
 }
