@@ -1,32 +1,40 @@
 package myProject.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "employees")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "employee_gen")
+    @SequenceGenerator(
+            name = "employee_gen",
+            sequenceName = "employee_seq",
+            allocationSize = 1)
     private Long id;
 
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "lastname")
     private String lastname;
 
-    @Column(name = "patronymic")
     private String patronymic;
 
-    @Column(name = "email")
     private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "project_id")
-    private Project project;
+    @ManyToMany(mappedBy = "employees", cascade = {CascadeType.ALL})
+    private List<Project> project;
+
+    @OneToMany(mappedBy = "employee", cascade = {CascadeType.ALL})
+    private List<Task> task;
 
 }

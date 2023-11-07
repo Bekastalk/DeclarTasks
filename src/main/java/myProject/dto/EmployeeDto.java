@@ -1,10 +1,12 @@
 package myProject.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class EmployeeDto {
     private String name;
     private String lastname;

@@ -2,6 +2,7 @@ package myProject.service.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import myProject.dto.ContractorCompanyDto;
 import myProject.dto.SimpleResponse;
 import myProject.entities.ContractorCompany;
@@ -17,6 +18,7 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class ContractorCompanyServiceImpl implements ContractorCompanyService {
 
     private final ContractorCompanyRepository contractorCompanyRepository;
@@ -27,6 +29,8 @@ public class ContractorCompanyServiceImpl implements ContractorCompanyService {
             ContractorCompany contractorCompany = new ContractorCompany();
             contractorCompany.setName(contractorCompanyDto.getName());
             contractorCompanyRepository.save(contractorCompany);
+            log.info(                    String.format("Contractor company with id: %s successfully saved!!!", contractorCompany.getId())
+            );
             return new SimpleResponse(
                     HttpStatus.OK,
                     String.format("Contractor company with id: %s successfully saved!!!", contractorCompany.getId())
