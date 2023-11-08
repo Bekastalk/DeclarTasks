@@ -3,6 +3,7 @@ package myProject.api;
 import lombok.RequiredArgsConstructor;
 import myProject.dto.ContractorCompanyDto;
 import myProject.dto.SimpleResponse;
+import myProject.entities.ContractorCompany;
 import myProject.service.ContractorCompanyService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,12 @@ public class ContractorCompanyApi {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/name")
+    public ContractorCompanyDto getByName(@RequestParam String name){
+        return contractorCompanyService.getContractorCompanyDtoByName(name);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/{id}")
     public SimpleResponse update(@PathVariable Long id,
                                  @RequestBody ContractorCompanyDto contractorCompanyDto){
@@ -44,6 +51,12 @@ public class ContractorCompanyApi {
     @DeleteMapping("/{id}")
     public SimpleResponse delete(@PathVariable Long id){
         return contractorCompanyService.delete(id);
+    }
+
+    @PostMapping("assignedToProject")
+    public SimpleResponse assign(@RequestParam Long pId,
+                                 @RequestParam Long ccId){
+        return contractorCompanyService.assignToProject(ccId,pId);
     }
 
 }

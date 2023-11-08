@@ -6,8 +6,11 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class ContractorCompanyDto {
     private String name;
+
+    public ContractorCompanyDto(String name) {
+        this.name = name;
+    }
 }

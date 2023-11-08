@@ -49,7 +49,8 @@ public class ContractorCompanyServiceImpl implements ContractorCompanyService {
 
     @Override
     public ContractorCompanyDto getContractorCompanyDtoByName(String name) {
-        return contractorCompanyRepository.findContractorCompanyByName(name)
+        log.info((String.format("Contractor with name: %s not found", name)));
+        return contractorCompanyRepository.findContractorCompanyByNamed(name)
                 .orElseThrow(()->new NotFoundException
                         (String.format("Contractor with name: %s not found", name)));
     }

@@ -33,11 +33,9 @@ public class Project {
     private short priority;
 
     @ManyToMany( cascade = {CascadeType.ALL})
-    @JoinColumn(name = "employee_id", nullable = false)
     private List<Employee> employees;
 
     @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "customer_company_id", nullable = false)
     private CustomerCompany customerCompany;
 
     @OneToMany(mappedBy = "project", cascade = {CascadeType.ALL})

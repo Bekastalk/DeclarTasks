@@ -40,7 +40,7 @@ public class CustomerCompanyServiceImpl implements CustomerCompanyService {
 
     @Override
     public CustomerCompanyDto getCompanyByName(String name) {
-        return customerCompanyRepository.findByName1(name).orElseThrow(
+        return customerCompanyRepository.findCustomerCompaniesByNamed(name).orElseThrow(
                 ()->new NotFoundException(
                         String.format("Customer company with name: %s not found!!!")
                 ));

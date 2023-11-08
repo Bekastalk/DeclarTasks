@@ -11,15 +11,14 @@ import java.util.Optional;
 
 @Repository
 public interface ContractorCompanyRepository extends JpaRepository<ContractorCompany, Long> {
-    Optional<ContractorCompanyDto> findContractorCompanyByName(String name);
+    @Query("select new myProject.dto.ContractorCompanyDto(c.name) from ContractorCompany  c where c.name= :name")
+    Optional<ContractorCompanyDto> findContractorCompanyByNamed(String name);
     ContractorCompany findByName(String name);
-
-
     @Query("""
-            select new myProject.dto.ContractorCompanyDto(c.name) from ContractorCompany c
+            select new myProject.dto.ContractorCompanyDto(c.name)
+             from ContractorCompany c
             """)
     List<ContractorCompanyDto> getAll();
-
     Optional<ContractorCompanyDto> getContractorCompaniesById(Long id);
 
 }
