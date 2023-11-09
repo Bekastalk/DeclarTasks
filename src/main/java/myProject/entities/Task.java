@@ -20,6 +20,7 @@ public class Task {
             sequenceName = "task_seq",
             allocationSize = 1)
     private Long id;
+    private String name;
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "project_id", nullable = false)
