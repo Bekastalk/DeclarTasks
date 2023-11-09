@@ -12,7 +12,10 @@ import java.util.Optional;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
     Optional<Project> findProjectByName(String name);
-    @Query("select new myProject.dto.ProjectDto(p.name,p.priority,p.createdDate,p.graduationDate) from Project p where p.name= :name")
+    @Query("select new myProject.dto.ProjectDto(p.name," +
+            "p.priority," +
+            "p.createdDate," +
+            "p.graduationDate) from Project p where p.name= :name")
     Optional<ProjectDto> findProjectByNamed(String name);
     Project findByName(String name);
 

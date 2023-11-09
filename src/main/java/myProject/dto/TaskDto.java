@@ -1,8 +1,7 @@
 package myProject.dto;
 
 import lombok.*;
-import myProject.entities.Employee;
-import myProject.entities.Project;
+
 
 @Getter
 @Setter
@@ -10,7 +9,5 @@ import myProject.entities.Project;
 @AllArgsConstructor
 @Builder
 public class TaskDto {
-    private Project project;
-    private Employee employees;
-
+    private String name;
 }
