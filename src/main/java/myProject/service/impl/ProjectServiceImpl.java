@@ -6,9 +6,11 @@ import lombok.extern.slf4j.Slf4j;
 import myProject.dto.ProjectDto;
 import myProject.dto.SimpleResponse;
 import myProject.entities.Project;
+import myProject.entities.Task;
 import myProject.exception.AlreadyExistException;
 import myProject.exception.NotFoundException;
 import myProject.repository.ProjectRepository;
+import myProject.repository.TaskRepository;
 import myProject.service.ProjectService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ import java.util.List;
 @Slf4j
 public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
+    private final TaskRepository taskRepository;
     @Override
     public SimpleResponse save(ProjectDto projectDto) {
         Project byName = projectRepository.findByName(projectDto.getName());
@@ -76,5 +79,19 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectDto getByName(String name) {
         return projectRepository.findProjectByNamed(name).orElseThrow(
                 () -> new NotFoundException(String.format("Project with name:%s not found", name)));
+    }
+
+    @Override
+    public SimpleResponse assignToTask(Long proId, Long taskId) {
+        Project project = projectRepository.findById(proId).orElseThrow(
+                () -> new NotFoundException(String.format("Project with id: %s not found!!!", proId)));
+        Task task = taskRepository.findById(taskId).orElseThrow(
+                () -> new NotFoundException(String.format("Task with id: %s not found!!!", taskId)));
+        task.setProject(project);
+        taskRepository.save(task);
+        return new SimpleResponse(
+                HttpStatus.OK,
+                String.format("Project with id: %s successfully assigned to task!!!", proId)
+        );
     }
 }

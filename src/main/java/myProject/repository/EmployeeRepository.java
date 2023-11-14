@@ -11,13 +11,12 @@ import java.util.Optional;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
-    Employee findByName(String name);
 
-    Optional<Employee> findEmployeeByName(String name);
+    Optional<Employee> findByFirstName(String name);
 
-    @Query("select new myProject.dto.EmployeeDto(e.name, e.lastname, e.patronymic,e.email) from Employee e")
+    @Query("select new myProject.dto.EmployeeDto(e.firstName, e.lastName) from Employee e")
     List<EmployeeDto> findAlle();
 
-    @Query("select new myProject.dto.EmployeeDto(e.name, e.lastname, e.patronymic,e.email) from Employee e where e.name=:name")
+    @Query("select new myProject.dto.EmployeeDto(e.firstName, e.lastName) from Employee e where e.firstName=:name")
    Optional <EmployeeDto> findEmployeeByNamed(String name);
 }

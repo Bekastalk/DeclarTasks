@@ -23,11 +23,9 @@ public class Task {
     private String name;
 
     @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
     @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "employee_id")
     private Employee employee;
 
 }

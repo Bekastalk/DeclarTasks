@@ -35,6 +35,10 @@ public class EmployeeApi {
     public SimpleResponse assign(@RequestParam Long empId, @RequestParam Long taskId){
         return employeeService.assign(empId, taskId);
     }
+    @PostMapping("/assignToProject")
+    public SimpleResponse assignToProject(@RequestParam Long empId, @RequestParam Long proId){
+        return employeeService.assignToProject(empId, proId);
+    }
 
     @PutMapping
     public SimpleResponse update(@RequestParam String name,

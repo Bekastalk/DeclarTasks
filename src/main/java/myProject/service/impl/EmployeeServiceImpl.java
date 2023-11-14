@@ -6,9 +6,11 @@ import lombok.extern.slf4j.Slf4j;
 import myProject.dto.EmployeeDto;
 import myProject.dto.SimpleResponse;
 import myProject.entities.Employee;
+import myProject.entities.Project;
 import myProject.entities.Task;
 import myProject.exception.NotFoundException;
 import myProject.repository.EmployeeRepository;
+import myProject.repository.ProjectRepository;
 import myProject.repository.TaskRepository;
 import myProject.service.EmployeeService;
 import org.springframework.http.HttpStatus;
@@ -23,44 +25,41 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
     private  final EmployeeRepository employeeRepository;
     private final TaskRepository taskRepository;
+    private final ProjectRepository projectRepository;
 
     @Override
     public SimpleResponse save(EmployeeDto employeeDto) {
             Employee  employee=new Employee();
-            employee.setName(employeeDto.getName());
-            employee.setLastname(employeeDto.getLastname());
-            employee.setPatronymic(employeeDto.getPatronymic());
-            employee.setEmail(employeeDto.getEmail());
+            employee.setFirstName(employeeDto.getFirstName());
+            employee.setLastName(employeeDto.getLastName());
             employeeRepository.save(employee);
             return new SimpleResponse(
                     HttpStatus.OK,
-                    String.format("Employee with name: %s successfully saved!!!", employee.getName())
+                    String.format("Employee with name: %s successfully saved!!!", employee.getFirstName())
             );
     }
 
     @Override
     public SimpleResponse update(String name, EmployeeDto employeeDto) {
-        Employee employee = employeeRepository.findEmployeeByName(name).orElseThrow(
+        Employee employee = employeeRepository.findByFirstName(name).orElseThrow(
                 () -> new NotFoundException(String.format("Employee with name:%s not found!!!", name)));
-        employee.setName(employeeDto.getName());
-        employee.setLastname(employeeDto.getLastname());
-        employee.setPatronymic(employeeDto.getPatronymic());
-        employee.setEmail(employeeDto.getEmail());
+        employee.setFirstName(employeeDto.getFirstName());
+        employee.setLastName(employeeDto.getLastName());
         employeeRepository.save(employee);
         return new SimpleResponse(
                 HttpStatus.OK,
-                String.format("Employee with name: %s successfully updated!!!", employee.getName())
+                String.format("Employee with name: %s successfully updated!!!", employee.getFirstName())
         );
     }
 
     @Override
     public SimpleResponse delete(String name) {
-        Employee employee = employeeRepository.findEmployeeByName(name).orElseThrow(
+        Employee employee = employeeRepository.findByFirstName(name).orElseThrow(
                 () -> new NotFoundException(String.format("Employee with name:%s not found!!!", name)));
         employeeRepository.delete(employee);
         return new SimpleResponse(
                 HttpStatus.OK,
-                String.format("Employee with name: %s successfully deleted!!!", employee.getName())
+                String.format("Employee with name: %s successfully deleted!!!", employee.getFirstName())
         );
     }
 
@@ -74,7 +73,23 @@ public class EmployeeServiceImpl implements EmployeeService {
         taskRepository.save(task);
         return new SimpleResponse(
                 HttpStatus.OK,
-                String.format("Employee with name: %s successfully assigned!!!", employee.getName())
+                String.format("Employee with name: %s successfully assigned!!!", employee.getFirstName())
+        );
+    }
+
+    @Override
+    public SimpleResponse assignToProject(Long empId, Long projectId) {
+        Employee employee = employeeRepository.findById(empId).orElseThrow(
+                () -> new NotFoundException("Employee with id: " + empId + " not found!!!"));
+        Project project = projectRepository.findById(projectId).orElseThrow(
+                () -> new NotFoundException("Project with id: " + projectId + " not found!!!"));
+        employee.getProject().add(project);
+        project.getEmployees().add(employee);
+        employeeRepository.save(employee);
+        projectRepository.save(project);
+        return new SimpleResponse(
+                HttpStatus.OK,
+                String.format("Employee with id: %s successfully assigned to Project!!!", empId)
         );
     }
 

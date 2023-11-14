@@ -23,18 +23,17 @@ public class Employee {
             allocationSize = 1)
     private Long id;
 
-    private String name;
+    private String firstName;
 
-    private String lastname;
-
-    private String patronymic;
-
-    private String email;
+    private String lastName;
 
     @ManyToMany(mappedBy = "employees", cascade = {CascadeType.ALL})
     private List<Project> project;
 
     @OneToMany(mappedBy = "employee", cascade = {CascadeType.ALL})
     private List<Task> task;
+
+    @OneToOne(mappedBy = "employee", cascade = {CascadeType.ALL})
+    private User user;
 
 }

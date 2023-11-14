@@ -11,6 +11,8 @@ public interface EmployeeService {
     SimpleResponse update(String name, EmployeeDto employeeDto);
     SimpleResponse delete(String name);
     SimpleResponse assign(Long empId, Long taskId);
+    SimpleResponse assignToProject(Long empId, Long projectId);
+
     List<EmployeeDto> getAll();
     EmployeeDto getByName(String name);
 

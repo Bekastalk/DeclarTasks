@@ -11,5 +11,6 @@ public interface ProjectService {
     SimpleResponse delete(String name);
     List<ProjectDto> getAll();
     ProjectDto getByName(String name);
+    SimpleResponse assignToTask(Long proId, Long taskId);
 
 }

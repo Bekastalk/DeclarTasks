@@ -8,9 +8,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class EmployeeDto {
-    private String name;
-    private String lastname;
-    private String patronymic;
-    private String email;
+    private String firstName;
+    private String lastName;
+
 
 }

@@ -22,6 +22,12 @@ public class ProjectApi {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/assign")
+    public SimpleResponse assign(@RequestParam Long proId, @RequestParam Long taskId){
+        return projectService.assignToTask(proId, taskId);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     public List<ProjectDto> getAll(){
         return projectService.getAll();
